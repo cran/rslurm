@@ -1,5 +1,17 @@
+rslurm 0.3.1
+============
+
+*2016-06-18*
+
+* Minor bug fix: specify full path of 'Rscript' when running batch scripts.
+
+
 rslurm 0.3.0
 ============
+
+*2016-05-27*
+
+*First version on CRAN*
 
 Major update to the package interface and implementation:
 
