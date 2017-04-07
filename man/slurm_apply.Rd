@@ -42,8 +42,9 @@ Details below for more information.}
 \code{sbatch}; see Details below for more information.}
 }
 \value{
-A \code{slurm_job} object containing the \code{jobname} and the 
-  number of \code{nodes} effectively used.
+A \code{slurm_job} object containing the \code{jobname}, the 
+  number of \code{nodes} effectively used, and if \code{submit = TRUE} the
+  \code{jobid}.
 }
 \description{
 Use \code{slurm_apply} to compute function over multiple sets of 
@@ -51,8 +52,8 @@ parameters in parallel, spread across multiple nodes of a SLURM cluster.
 }
 \details{
 This function creates a temporary folder ("_rslurm_[jobname]") in the current
-directory, holding the .RData files, the R script and the Bash submission 
-script generated for the SLURM job.
+directory, holding .RData and .RDS data files, the R script to run and the Bash
+submission script generated for the SLURM job.
 
 The set of input parameters is divided in equal chunks sent to each node, and 
 \code{f} is evaluated in parallel within each node using functions from the
@@ -70,7 +71,7 @@ not be manually set.
 
 When processing the computation job, the SLURM cluster will output two types
 of files in the temporary folder: those containing the return values of the
-function for each subset of parameters ("results_[node_id].RData") and those
+function for each subset of parameters ("results_[node_id].RDS") and those
 containing any console or error output produced by R on each node
 ("slurm_[node_id].out").
 
@@ -100,4 +101,3 @@ cleanup_files(sjob)
   \code{\link{get_slurm_out}} and \code{\link{print_job_status}} 
   which use the output of this function.
 }
-

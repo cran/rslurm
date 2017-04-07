@@ -30,8 +30,9 @@ Details below for more information.}
 \code{sbatch}; see Details below for more information.}
 }
 \value{
-A \code{slurm_job} object containing the \code{jobname} and the 
-  number of \code{nodes} effectively used.
+A \code{slurm_job} object containing the \code{jobname}, the 
+  number of \code{nodes} effectively used, and if \code{submit = TRUE}
+  the \code{jobid}.
 }
 \description{
 Use \code{slurm_call} to perform a single function evaluation a the SLURM 
@@ -39,8 +40,8 @@ cluster.
 }
 \details{
 This function creates a temporary folder ("_rslurm_[jobname]") in the current
-directory, holding the .RData files, the R script and the Bash submission 
-script generated for the SLURM job.
+directory, holding .RData and .RDS data files, the R script to run and the Bash
+submission script generated for the SLURM job.
 
 The names of any other R objects (besides \code{params}) that \code{f} needs 
 to access should be listed in the \code{add_objects} argument.
@@ -55,7 +56,7 @@ not be manually set.
 
 When processing the computation job, the SLURM cluster will output two files 
 in the temporary folder: one with the return value of the function 
-("results_0.RData") and one containing any console or error output produced 
+("results_0.RDS") and one containing any console or error output produced 
 by R ("slurm_[node_id].out").
 
 If \code{submit = TRUE}, the job is sent to the cluster and a confirmation
@@ -76,4 +77,3 @@ the description of the related functions for more details.
   \code{\link{get_slurm_out}} and \code{\link{print_job_status}} 
   which use the output of this function.
 }
-
