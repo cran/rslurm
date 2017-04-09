@@ -1,8 +1,3 @@
-#' rslurm: Submit R calculations to a SLURM cluster
-#'
-#' This package automates the process of sending simple function calls or 
-#' parallel calculations to a cluster using the SLURM workload manager.
-#' 
 #' @section Overview:
 #' This package includes two core functions used to send computations to a 
 #' SLURM cluster. While \code{\link{slurm_call}} executes a function using a
@@ -65,9 +60,10 @@
 #' cleanup_files(sjob1)
 #' }
 #' 
-#' @docType package
-#' @name rslurm-package
-#' @aliases rslurm
+#' @section Acknowledgement:
+#' Development of this R package was supported by the National
+#' Socio-Environmental Synthesis Center (SESYNC) under funding received
+#' from the National Science Foundation DBI-1052875.
 #' 
 #' @importFrom utils capture.output
-NULL
+"_PACKAGE"
