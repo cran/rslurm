@@ -1,7 +1,7 @@
-#' Reads the output of a function calculated on the SLURM cluster 
+#' Reads the output of a function calculated on the Slurm cluster 
 #'
 #' This function reads all function output files (one by cluster node used) from 
-#' the specified SLURM job and returns the result in a single data frame
+#' the specified Slurm job and returns the result in a single data frame
 #' (if "table" format selected) or list (if "raw" format selected). It doesn't 
 #' record any messages (including warnings or errors) output to the R console
 #' during the computation; these can be consulted by invoking 
@@ -34,11 +34,8 @@ get_slurm_out <- function(slr_job, outtype = "raw", wait = TRUE) {
     if (!(outtype %in% outtypes)) {
         stop(paste("outtype should be one of:", paste(outtypes, collapse = ', ')))
     }
-    if (is.null(slr_job$jobid)) {
-        stop("slr_job has not been submitted")
-    }
-    
-    # Wait for slr_job using SLURM dependency
+
+    # Wait for slr_job using Slurm dependency
     if (wait) {
         wait_for_job(slr_job)
     }
