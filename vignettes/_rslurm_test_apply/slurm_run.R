@@ -15,6 +15,7 @@ library(rslurm, quietly = TRUE)
     FUN = .rslurm_func,
     .rslurm_params[.rslurm_istart:.rslurm_iend, , drop = FALSE],
     mc.cores = 2,
+    mc.preschedule = TRUE,
     SIMPLIFY = FALSE))
 
 saveRDS(.rslurm_result, file = paste0('results_', .rslurm_id, '.RDS'))
