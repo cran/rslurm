@@ -31,47 +31,26 @@ format_option_list <- function(slurm_options) {
     list(flags = slurm_flags, options = slurm_options)
 }
 
-
-# Run an array job (output of slurm_apply) locally; used in package tests
-local_slurm_array <- function(slr_job) {
-    olddir <- getwd()
-    rscript_path <- file.path(R.home("bin"), "Rscript")
-    setwd(paste0("_rslurm_", slr_job$jobname))
-    tryCatch({
-        #FIXME simplify with system('SLURM_ARRAY_TASK_ID=1 Rscript path/to/slurm_run.R')
-        # and loop in this code
-        writeLines(c(paste0("for (i in 1:", slr_job$nodes, " - 1) {"),
-                     "Sys.setenv(SLURM_ARRAY_TASK_ID = i)",
-                     "source('slurm_run.R')", "}"), "local_run.R")
-        system(paste(rscript_path, "--vanilla local_run.R"))
-    }, finally = setwd(olddir))
-    return(slr_job)
-}
-
 # Submit job
 submit_slurm_job <- function(tmpdir) {
     old_wd <- setwd(tmpdir)
-    tryCatch({
-        system("sbatch submit.sh")
-    }, finally = setwd(old_wd))
+    sys_out <- tryCatch({
+            system("sbatch submit.sh", intern = TRUE)
+        }, finally = setwd(old_wd))
+    message(sys_out)
+    sys_out <- strsplit(sys_out, " ")[[1]]
+    jobid <- sys_out[length(sys_out)]
+    return(jobid)
 }
 
-# Submit dummy job with a dependency via srun to block R process
+# Submit dummy job with a dependency via sbatch to block R process
 wait_for_job <- function(slr_job) {
     queued <- system(
         paste('test -z "$(squeue -hn', slr_job$jobname, '2>/dev/null)"'),
         ignore.stderr = TRUE)
     if (queued) {
-        srun <- sprintf(paste('srun',
-            '--nodes=1',
-            '--time=0:1',
-            '--output=/dev/null',
-            '--quiet',
-            '--dependency=singleton',
-            '--job-name=%s',
-            'echo 0'),
-            slr_job$jobname)
-        system(srun)
+        block_cmd <- sprintf('sbatch --nodes=1 --output=/dev/null --time=00:01:00 --dependency=singleton --job-name=%s --wait --wrap="hostname"', slr_job$jobname)
+        system(block_cmd, intern=TRUE)
     }
     return()
 }

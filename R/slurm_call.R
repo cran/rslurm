@@ -8,7 +8,7 @@
 #' Bash submission script generated for the Slurm job.
 #' 
 #' The names of any other R objects (besides \code{params}) that \code{f} needs 
-#' to access should be listed in the \code{add_objects} argument.
+#' to access should be listed in the \code{global_objects} argument.
 #' 
 #' Use \code{slurm_options} to set any option recognized by \code{sbatch}, e.g. 
 #' \code{slurm_options = list(time = "1:00:00", share = TRUE)}. See
@@ -38,9 +38,11 @@
 #' @param params A named list of parameters to pass to \code{f}.
 #' @param jobname The name of the Slurm job; if \code{NA}, it is assigned a 
 #'   random name of the form "slr####".
-#' @param add_objects A character vector containing the name of R objects to be 
+#' @param global_objects A character vector containing the name of R objects to be 
 #'   saved in a .RData file and loaded on each cluster node prior to calling 
 #'   \code{f}.
+#' @param add_objects Older deprecated name of \code{global_objects}, retained for
+#' backwards compatibility.
 #' @param pkgs A character vector containing the names of packages that must be
 #'   loaded on each cluster node. By default, it includes all packages loaded by
 #'   the user when \code{slurm_call} is called.
@@ -66,7 +68,7 @@
 #'   \code{\link{get_slurm_out}} and \code{\link{get_job_status}} which use
 #'   the output of this function.
 #' @export
-slurm_call <- function(f, params, jobname = NA, add_objects = NULL, 
+slurm_call <- function(f, params = list(), jobname = NA, global_objects = NULL, add_objects = NULL, 
                        pkgs = rev(.packages()), libPaths = NULL, rscript_path = NULL,
                        r_template = NULL, sh_template = NULL, slurm_options = list(), 
                        submit = TRUE) {
@@ -74,11 +76,19 @@ slurm_call <- function(f, params, jobname = NA, add_objects = NULL,
     if (!is.function(f)) {
         stop("first argument to slurm_call should be a function")
     }
-    if (!is.list(params)) {
-        stop("second argument to slurm_call should be a list")
-    }
-    if (is.null(names(params)) || any(!names(params) %in% names(formals(f)))) {
-        stop("names of params must match arguments of f")
+    if (!missing(params)) {
+        if (!is.list(params)) {
+            stop("second argument to slurm_call should be a list")
+        }
+        if (is.null(names(params)) || (!is.primitive(f) && !"..." %in% names(formals(f)) && any(!names(params) %in% names(formals(f))))) {
+            stop("names of params must match arguments of f")
+        }
+    } 
+    
+    # Check for use of deprecated argument
+    if (!missing("add_objects")) {
+        warning("Argument add_objects is deprecated; use global_objects instead.", .call = FALSE)
+        global_objects <- add_objects
     }
     
     # Default templates
@@ -97,8 +107,8 @@ slurm_call <- function(f, params, jobname = NA, add_objects = NULL,
     
     saveRDS(params, file = file.path(tmpdir, "params.RDS"))
     saveRDS(f, file = file.path(tmpdir, "f.RDS"))
-    if (!is.null(add_objects)) {
-        save(list = add_objects,
+    if (!is.null(global_objects)) {
+        save(list = global_objects,
              file = file.path(tmpdir, "add_objects.RData"),
              envir = environment(f))
     }    
@@ -107,7 +117,7 @@ slurm_call <- function(f, params, jobname = NA, add_objects = NULL,
     template_r <- readLines(r_template)
     script_r <- whisker::whisker.render(template_r,
                     list(pkgs = pkgs,
-                         add_obj = !is.null(add_objects),
+                         add_obj = !is.null(global_objects),
                          libPaths = libPaths))
     writeLines(script_r, file.path(tmpdir, "slurm_run.R"))
     
@@ -130,11 +140,12 @@ slurm_call <- function(f, params, jobname = NA, add_objects = NULL,
         cat("Cannot submit; no Slurm workload manager found\n")
     }
     if (submit) {
-        submit_slurm_job(tmpdir)
+        jobid <- submit_slurm_job(tmpdir)
     } else {
-        cat(paste("Submission scripts output in directory", tmpdir))
+        jobid <- NA
+        cat(paste("Submission scripts output in directory", tmpdir,"\n"))
     }
 
     # Return 'slurm_job' object
-    slurm_job(jobname, 1)
+    slurm_job(jobname, jobid, 1)
 }

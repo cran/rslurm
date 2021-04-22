@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<img src="logo_slurm.svg" align="right" width=150px>
+
 # rslurm: submit R code to a Slurm cluster
 
 <!-- badges: start -->
@@ -9,11 +11,11 @@
 checks](https://cranchecks.info/badges/worst/rslurm)](https://CRAN.R-project.org/web/checks/check_results_rslurm.html)
 [![rstudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/rslurm)](https://CRAN.R-project.org/package=rslurm)
-[![Build
-Status](https://travis-ci.org/SESYNC-ci/rslurm.svg?branch=master)](https://travis-ci.org/SESYNC-ci/rslurm)
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![R build
+status](https://github.com/SESYNC-ci/rslurm/workflows/R-CMD-check/badge.svg)](https://github.com/SESYNC-ci/rslurm/actions)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rslurm)](https://CRAN.R-project.org/package=rslurm)
 <!-- badges: end -->
@@ -90,5 +92,6 @@ The output of `slurm_apply` is a `slurm_job` object that stores a few
 pieces of information (job name, job ID, and the number of nodes) needed
 to retrieve the job’s output.
 
-See [Get started](http://cyberhelp.sesync.org/rslurm/) for more
-information.
+See [Get
+started](http://cyberhelp.sesync.org/rslurm/articles/rslurm.html) for
+more information.
