@@ -8,16 +8,16 @@ Acknowledgements: Development of this R package was supported by the
         National Socio-Environmental Synthesis Center (SESYNC) under
         funding received from the National Science Foundation grants
         DBI-1052875 and DBI-1639145.
-Version: 0.6.0
-Date: 2021-04-21
+Version: 0.6.1
+Date: 2021-11-12
 License: GPL-3
-URL: http://cyberhelp.sesync.org/rslurm/
+URL: https://sesync-ci.github.io/rslurm/
 BugReports: https://github.com/SESYNC-ci/rslurm/issues
 Authors@R: c(person('Philippe', 'Marchand', email = "marchand.philippe@gmail.com", role = 'aut'),
              person('Ian', 'Carroll', role = 'aut'),
              person('Mike', 'Smorul', role = 'aut'),
              person('Rachael', 'Blake', role = 'aut'),
-             person('Quentin', 'Read', email = 'qread@sesync.org', role = c('aut', 'cre')),
+             person('Quentin', 'Read', email = 'quentin.read@usda.gov', role = c('aut', 'cre')),
              person('Dayne', 'Filer', role = 'ctb'),
              person('Ben', 'Fasoli', role = 'ctb'),
              person('Pol', 'van Rijn', role = 'ctb'),
@@ -28,11 +28,11 @@ Authors@R: c(person('Philippe', 'Marchand', email = "marchand.philippe@gmail.com
              )
 Depends: R (>= 3.5.0)
 Imports: whisker (>= 0.3)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: parallel, testthat, knitr, rmarkdown, markdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-04-22 14:01:02 UTC; qread-fs@research.sesync.org
+Packaged: 2021-11-12 19:56:33 UTC; qread@sesync.org
 Author: Philippe Marchand [aut],
   Ian Carroll [aut],
   Mike Smorul [aut],
@@ -45,6 +45,6 @@ Author: Philippe Marchand [aut],
   Rob Gilmore [ctb],
   Christopher Barrington [ctb],
   Se Jong Cho [art]
-Maintainer: Quentin Read <qread@sesync.org>
+Maintainer: Quentin Read <quentin.read@usda.gov>
 Repository: CRAN
-Date/Publication: 2021-04-22 14:30:02 UTC
+Date/Publication: 2021-11-15 09:40:02 UTC

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="logo_slurm.svg" align="right" width=150px>
+<img src="logo_slurm.png" align="right" width=150px>
 
 # rslurm: submit R code to a Slurm cluster
 
@@ -32,7 +32,8 @@ maintainer.
 
 ### Installation
 
-You can install the released version of rslurm from
+You can install the released version of
+[rslurm](https://cran.r-project.org/package=rslurm) from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -50,8 +51,7 @@ devtools::install_github("SESYNC-ci/rslurm")
 ### Documentation
 
 Package documentation is accessible from the R console through
-`package?rslurm` and
-[online](https://cran.r-project.org/package=rslurm).
+`package?rslurm` and [online](https://sesync-ci.github.io/rslurm).
 
 ### Example
 
@@ -93,5 +93,5 @@ pieces of information (job name, job ID, and the number of nodes) needed
 to retrieve the job’s output.
 
 See [Get
-started](http://cyberhelp.sesync.org/rslurm/articles/rslurm.html) for
+started](https://sesync-ci.github.io/rslurm/articles/rslurm.html) for
 more information.
